@@ -1,0 +1,1365 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BAPTTEUR — World Tour 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --red: #C8102E;
+    --gold: #B8960C;
+    --black: #0a0a0a;
+    --offwhite: #F2EFE6;
+    --gray: #8a8a8a;
+    --lightgray: #e8e5dc;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--black);
+    color: var(--offwhite);
+    font-family: 'Space Mono', monospace;
+    overflow-x: hidden;
+    cursor: default;
+  }
+
+  /* NOISE TEXTURE OVERLAY */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 999;
+    opacity: 0.35;
+  }
+
+  /* TICKER */
+  .ticker {
+    background: var(--red);
+    padding: 8px 0;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  .ticker-inner {
+    display: inline-block;
+    animation: ticker 22s linear infinite;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    color: #fff;
+  }
+  @keyframes ticker {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* NAV */
+  nav {
+    padding: 20px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 0.5px solid rgba(255,255,255,0.1);
+  }
+  .nav-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    letter-spacing: 0.08em;
+    color: var(--offwhite);
+    text-decoration: none;
+  }
+  .nav-logo span { color: var(--red); }
+  .nav-links {
+    display: flex;
+    gap: 24px;
+    list-style: none;
+  }
+  .nav-links a {
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    color: var(--gray);
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--offwhite); }
+  .nav-cta {
+    background: var(--red);
+    color: #fff !important;
+    padding: 8px 16px;
+    font-size: 10px !important;
+    letter-spacing: 0.12em !important;
+  }
+
+  /* HERO */
+  .hero {
+    padding: 60px 24px 48px;
+    position: relative;
+    overflow: hidden;
+    min-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+
+  .hero-bg-text {
+    position: absolute;
+    top: -20px;
+    left: -10px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(120px, 35vw, 280px);
+    color: rgba(255,255,255,0.03);
+    letter-spacing: -0.02em;
+    line-height: 0.9;
+    user-select: none;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .hero-eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--red);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    position: relative;
+    z-index: 1;
+  }
+  .hero-eyebrow::before {
+    content: '';
+    display: inline-block;
+    width: 28px;
+    height: 1px;
+    background: var(--red);
+    margin-right: 10px;
+    vertical-align: middle;
+  }
+
+  .hero-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(72px, 22vw, 160px);
+    line-height: 0.88;
+    letter-spacing: 0.02em;
+    color: var(--offwhite);
+    position: relative;
+    z-index: 1;
+    margin-bottom: 8px;
+  }
+  .hero-title .red { color: var(--red); }
+
+  .hero-subtitle {
+    font-family: 'DM Serif Display', serif;
+    font-style: italic;
+    font-size: clamp(16px, 4vw, 22px);
+    color: var(--gray);
+    margin-bottom: 40px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: rgba(255,255,255,0.08);
+    border: 0.5px solid rgba(255,255,255,0.08);
+    position: relative;
+    z-index: 1;
+    margin-bottom: 32px;
+  }
+  .hero-stat {
+    background: var(--black);
+    padding: 20px 16px;
+    text-align: center;
+  }
+  .hero-stat-val {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 36px;
+    color: var(--offwhite);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .hero-stat-val .gold { color: var(--gold); }
+  .hero-stat-label {
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    color: var(--gray);
+    text-transform: uppercase;
+  }
+
+  .hero-cta-row {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    position: relative;
+    z-index: 1;
+  }
+  .btn-primary {
+    background: var(--red);
+    color: #fff;
+    border: none;
+    padding: 14px 28px;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: opacity 0.2s, transform 0.1s;
+    text-decoration: none;
+    display: inline-block;
+  }
+  .btn-primary:hover { opacity: 0.85; }
+  .btn-primary:active { transform: scale(0.98); }
+  .btn-outline {
+    background: transparent;
+    color: var(--offwhite);
+    border: 0.5px solid rgba(255,255,255,0.3);
+    padding: 14px 28px;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: border-color 0.2s, color 0.2s;
+    text-decoration: none;
+    display: inline-block;
+  }
+  .btn-outline:hover { border-color: var(--offwhite); }
+
+  /* SECTION HEADERS */
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+  .section-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 64px;
+    color: rgba(255,255,255,0.06);
+    line-height: 1;
+    user-select: none;
+  }
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 32px;
+    letter-spacing: 0.06em;
+    color: var(--offwhite);
+  }
+  .section-title span { color: var(--red); }
+
+  section {
+    padding: 64px 24px;
+    border-top: 0.5px solid rgba(255,255,255,0.07);
+  }
+
+  /* TOUR DATES */
+  .tour-date {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    border-bottom: 0.5px solid rgba(255,255,255,0.07);
+    padding: 18px 0;
+    transition: background 0.15s;
+    cursor: pointer;
+    position: relative;
+  }
+  .tour-date:hover { background: rgba(255,255,255,0.02); }
+  .tour-date:hover .tour-ticket-btn { opacity: 1; }
+
+  .tour-date-date {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    color: var(--gray);
+    width: 100px;
+    flex-shrink: 0;
+    letter-spacing: 0.05em;
+  }
+  .tour-date-info { flex: 1; }
+  .tour-date-venue {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--offwhite);
+    margin-bottom: 2px;
+  }
+  .tour-date-city {
+    font-size: 10px;
+    color: var(--gray);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .tour-status {
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    flex-shrink: 0;
+  }
+  .status-sold { color: var(--red); border: 0.5px solid var(--red); }
+  .status-few { color: var(--gold); border: 0.5px solid var(--gold); }
+  .status-avail { color: #4ade80; border: 0.5px solid #4ade80; }
+
+  .tour-ticket-btn {
+    position: absolute;
+    right: 0;
+    background: var(--red);
+    color: #fff;
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 6px 14px;
+    opacity: 0;
+    transition: opacity 0.15s;
+    border: none;
+    cursor: pointer;
+    font-family: 'Space Mono', monospace;
+  }
+
+  .tour-highlight {
+    background: rgba(200, 16, 46, 0.08);
+    border: 0.5px solid rgba(200, 16, 46, 0.3);
+    padding: 18px 16px;
+    margin-top: 16px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .tour-highlight-icon {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 40px;
+    color: var(--red);
+    line-height: 1;
+  }
+  .tour-highlight-text { font-size: 12px; color: var(--offwhite); line-height: 1.6; }
+  .tour-highlight-text strong { color: var(--gold); font-weight: 700; }
+
+  /* COUNTDOWN */
+  .countdown-block {
+    background: rgba(255,255,255,0.03);
+    border: 0.5px solid rgba(255,255,255,0.08);
+    padding: 32px 24px;
+    text-align: center;
+    margin-top: 32px;
+  }
+  .countdown-label {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--gray);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+  .countdown-units {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+  }
+  .countdown-unit { text-align: center; }
+  .countdown-val {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 52px;
+    color: var(--offwhite);
+    line-height: 1;
+    min-width: 60px;
+    display: block;
+  }
+  .countdown-unit-label {
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    color: var(--gray);
+    text-transform: uppercase;
+    margin-top: 4px;
+  }
+  .countdown-sep {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 52px;
+    color: var(--red);
+    line-height: 1;
+    align-self: flex-start;
+    padding-top: 0;
+  }
+
+  /* SETLIST / TRACKLIST */
+  .setlist-track {
+    display: flex;
+    align-items: center;
+    padding: 14px 0;
+    border-bottom: 0.5px solid rgba(255,255,255,0.06);
+    gap: 16px;
+    transition: background 0.1s;
+  }
+  .setlist-track:hover { background: rgba(255,255,255,0.02); }
+  .track-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20px;
+    color: rgba(255,255,255,0.15);
+    width: 28px;
+    flex-shrink: 0;
+    text-align: right;
+  }
+  .track-bar {
+    width: 3px;
+    height: 32px;
+    background: rgba(255,255,255,0.1);
+    flex-shrink: 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .track-bar-fill {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--red);
+    transition: height 0.3s;
+  }
+  .setlist-track:hover .track-bar-fill { height: 100% !important; }
+  .track-info { flex: 1; }
+  .track-name {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--offwhite);
+    margin-bottom: 2px;
+  }
+  .track-desc {
+    font-size: 10px;
+    color: var(--gray);
+    letter-spacing: 0.05em;
+  }
+  .track-duration {
+    font-size: 11px;
+    color: var(--gray);
+    font-family: 'Space Mono', monospace;
+  }
+
+  /* PRESS / TESTIMONIALS */
+  .press-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .press-quote {
+    border-left: 2px solid var(--red);
+    padding: 16px 20px;
+    background: rgba(255,255,255,0.02);
+  }
+  .press-text {
+    font-family: 'DM Serif Display', serif;
+    font-style: italic;
+    font-size: 15px;
+    color: var(--offwhite);
+    line-height: 1.55;
+    margin-bottom: 10px;
+  }
+  .press-source {
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    color: var(--gray);
+    text-transform: uppercase;
+  }
+  .press-stars {
+    color: var(--gold);
+    font-size: 12px;
+    letter-spacing: 2px;
+    margin-bottom: 6px;
+  }
+
+  /* MERCH */
+  .merch-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+  .merch-item {
+    border: 0.5px solid rgba(255,255,255,0.1);
+    padding: 20px 16px;
+    cursor: pointer;
+    transition: border-color 0.15s;
+    position: relative;
+    overflow: hidden;
+  }
+  .merch-item:hover { border-color: rgba(255,255,255,0.3); }
+  .merch-icon {
+    font-size: 32px;
+    margin-bottom: 12px;
+    display: block;
+  }
+  .merch-name {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--offwhite);
+    margin-bottom: 4px;
+  }
+  .merch-price {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20px;
+    color: var(--gold);
+  }
+  .merch-sold-out {
+    position: absolute;
+    top: 10px;
+    right: -22px;
+    background: var(--red);
+    color: #fff;
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 3px 28px;
+    transform: rotate(30deg);
+  }
+  .merch-note {
+    font-size: 9px;
+    color: var(--gray);
+    margin-top: 4px;
+    line-height: 1.4;
+  }
+
+  /* FAN SUPPORT */
+  .support-meter-wrap {
+    background: rgba(255,255,255,0.04);
+    border: 0.5px solid rgba(255,255,255,0.08);
+    padding: 24px;
+    margin-bottom: 20px;
+  }
+  .support-meter-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: var(--gray);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .support-meter-bar {
+    height: 4px;
+    background: rgba(255,255,255,0.08);
+    position: relative;
+    overflow: hidden;
+  }
+  .support-meter-fill {
+    height: 100%;
+    background: var(--red);
+    transition: width 0.6s cubic-bezier(.4,0,.2,1);
+  }
+  .support-btns {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+  .support-btn {
+    background: transparent;
+    border: 0.5px solid rgba(255,255,255,0.15);
+    color: var(--offwhite);
+    padding: 12px 8px;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    cursor: pointer;
+    transition: border-color 0.15s, background 0.15s;
+    text-align: center;
+    line-height: 1.4;
+  }
+  .support-btn:hover { border-color: var(--red); background: rgba(200,16,46,0.08); }
+  .support-btn:active { transform: scale(0.97); }
+  .support-btn .btn-icon { font-size: 18px; display: block; margin-bottom: 4px; }
+  .support-feedback {
+    font-size: 11px;
+    color: var(--red);
+    text-align: center;
+    min-height: 18px;
+    margin-top: 12px;
+    letter-spacing: 0.05em;
+    font-style: italic;
+  }
+
+  /* DEMANDE EXCLUSIVE */
+  .form-group { margin-bottom: 16px; }
+  .form-label {
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    color: var(--gray);
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 8px;
+  }
+  .form-input {
+    width: 100%;
+    background: rgba(255,255,255,0.04);
+    border: 0.5px solid rgba(255,255,255,0.15);
+    color: var(--offwhite);
+    padding: 12px 14px;
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    outline: none;
+    transition: border-color 0.15s;
+  }
+  .form-input:focus { border-color: var(--red); }
+  .form-input::placeholder { color: rgba(255,255,255,0.2); }
+  select.form-input option { background: #1a1a1a; }
+  .form-disclaimer {
+    font-size: 10px;
+    color: var(--gray);
+    line-height: 1.6;
+    margin-top: 12px;
+    font-style: italic;
+  }
+  .form-disclaimer a { color: var(--red); text-decoration: none; }
+
+  /* FOOTER */
+  footer {
+    padding: 48px 24px 32px;
+    border-top: 0.5px solid rgba(255,255,255,0.07);
+  }
+  .footer-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 48px;
+    color: var(--offwhite);
+    letter-spacing: 0.04em;
+    margin-bottom: 8px;
+  }
+  .footer-logo span { color: var(--red); }
+  .footer-tagline {
+    font-size: 11px;
+    color: var(--gray);
+    margin-bottom: 32px;
+    font-style: italic;
+  }
+  .footer-links {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 32px;
+  }
+  .footer-links a {
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: var(--gray);
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: color 0.15s;
+  }
+  .footer-links a:hover { color: var(--offwhite); }
+  .footer-bottom {
+    font-size: 10px;
+    color: rgba(255,255,255,0.2);
+    line-height: 1.7;
+  }
+  .footer-arsenal {
+    display: inline-block;
+    width: 8px; height: 8px;
+    background: #DB0007;
+    border-radius: 50%;
+    margin-right: 6px;
+    vertical-align: middle;
+  }
+
+  /* MODAL TICKET */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.85);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: var(--black);
+    border: 0.5px solid rgba(255,255,255,0.15);
+    max-width: 360px;
+    width: 100%;
+    padding: 32px 24px;
+    position: relative;
+  }
+  .modal-close {
+    position: absolute;
+    top: 16px; right: 16px;
+    background: none; border: none;
+    color: var(--gray); font-size: 20px; cursor: pointer;
+    font-family: 'Space Mono', monospace;
+  }
+  .modal-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    color: var(--offwhite);
+    margin-bottom: 8px;
+  }
+  .modal-venue { font-size: 12px; color: var(--gray); margin-bottom: 24px; }
+  .ticket-price {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 64px;
+    color: var(--red);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .ticket-note { font-size: 11px; color: var(--gray); font-style: italic; margin-bottom: 24px; }
+
+  /* RESPONSIVE MOBILE */
+  @media (max-width: 480px) {
+    section { padding: 48px 16px; }
+    nav { padding: 14px 16px; }
+    .hero { padding: 40px 16px 36px; }
+
+    /* Nav — masquer les liens intermédiaires, garder logo + booking */
+    .nav-links li:not(:last-child) { display: none; }
+
+    /* Countdown — réduire la taille pour tenir sur écran */
+    .countdown-units { gap: 8px; }
+    .countdown-val { font-size: 36px; min-width: 40px; }
+    .countdown-sep { font-size: 36px; }
+    .countdown-unit-label { font-size: 8px; letter-spacing: 0.08em; }
+    .countdown-block { padding: 24px 12px; }
+    .countdown-label { font-size: 9px; letter-spacing: 0.1em; }
+
+    /* Hero stats */
+    .hero-stats { grid-template-columns: repeat(3, 1fr); }
+    .hero-stat { padding: 14px 8px; }
+    .hero-stat-val { font-size: 26px; }
+    .hero-stat-label { font-size: 8px; }
+
+    /* Boutons CTA */
+    .hero-cta-row { flex-direction: column; }
+    .btn-primary, .btn-outline { width: 100%; text-align: center; padding: 14px 16px; }
+
+    /* Tour dates */
+    .tour-date-date { width: 72px; font-size: 18px; }
+    .tour-date-venue { font-size: 12px; }
+
+    /* Section header */
+    .section-num { font-size: 44px; }
+    .section-title { font-size: 26px; }
+
+    /* Merch grid */
+    .merch-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
+    .merch-name { font-size: 11px; }
+
+    /* Support buttons */
+    .support-btns { grid-template-columns: 1fr 1fr; }
+    .support-btn { font-size: 10px; padding: 10px 6px; }
+
+    /* Modal */
+    .modal { padding: 24px 16px; }
+    .ticket-price { font-size: 48px; }
+
+    /* Setlist */
+    .track-duration { display: none; }
+
+    /* Footer */
+    footer { padding: 36px 16px 24px; }
+    .footer-logo { font-size: 36px; }
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .fade-up { animation: fadeUp 0.6s ease forwards; }
+  .fade-up-2 { animation: fadeUp 0.6s 0.15s ease both; }
+  .fade-up-3 { animation: fadeUp 0.6s 0.3s ease both; }
+  .fade-up-4 { animation: fadeUp 0.6s 0.45s ease both; }
+
+  @keyframes pulse-dot {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+  .live-dot {
+    display: inline-block;
+    width: 6px; height: 6px;
+    background: var(--red);
+    border-radius: 50%;
+    margin-right: 6px;
+    animation: pulse-dot 1.4s ease-in-out infinite;
+    vertical-align: middle;
+  }
+</style>
+</head>
+<body>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-inner">
+    ★ BAPTTEUR WORLD TOUR 2026 ★ SOLD OUT — WEMBLEY STADIUM ★ SOLD OUT — MADISON SQUARE GARDEN ★ SOLD OUT — OLYMPIA PARIS ★ SOLD OUT — SYDNEY OPERA HOUSE ★ 1 PLACE RESTANTE — SALON DE BAPTISTE ★ BAPTTEUR WORLD TOUR 2026 ★ SOLD OUT — WEMBLEY STADIUM ★ SOLD OUT — MADISON SQUARE GARDEN ★ SOLD OUT — OLYMPIA PARIS ★ SOLD OUT — SYDNEY OPERA HOUSE ★ 1 PLACE RESTANTE — SALON DE BAPTISTE ★
+  </div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#">BAP<span>T</span>TEUR</a>
+  <ul class="nav-links">
+    <li><a href="#dates">Dates</a></li>
+    <li><a href="#setlist">Setlist</a></li>
+    <li><a href="#merch">Merch</a></li>
+    <li><a href="#booking" class="nav-cta">Booking</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-bg-text">BAPTTEUR</div>
+  <div class="hero-eyebrow fade-up">World Tour 2026 — La Tournée Du Siècle</div>
+  <div class="hero-title fade-up-2">BAPT<br><span class="red">TEUR</span></div>
+  <div class="hero-subtitle fade-up-3">Batteur. Légende. À la conquête du club des 27.</div>
+
+  <div class="hero-stats fade-up-4">
+    <div class="hero-stat">
+      <div class="hero-stat-val"><span class="gold">27</span></div>
+      <div class="hero-stat-label">Villes du tour</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-val">26<span style="font-size:20px; color: var(--gray);">/27</span></div>
+      <div class="hero-stat-label">Dates sold out</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-val"><span class="gold">∞</span></div>
+      <div class="hero-stat-label">BPM potentiels</div>
+    </div>
+  </div>
+
+  <div class="hero-cta-row fade-up-4">
+    <a href="#dates" class="btn-primary">Voir les dates</a>
+    <a href="#support" class="btn-outline">Soutenir Baptteur</a>
+  </div>
+</div>
+
+<!-- TOUR DATES -->
+<section id="dates">
+  <div class="section-header">
+    <div class="section-num">01</div>
+    <div class="section-title">Tour <span>Dates</span></div>
+  </div>
+
+  <div id="tour-dates-list">
+    <div class="tour-date" onclick="openTicket('Wembley Stadium', 'Londres, Angleterre', 'SOLD OUT')">
+      <div class="tour-date-date">14 JAN</div>
+      <div class="tour-date-info">
+        <div class="tour-date-venue">Wembley Stadium</div>
+        <div class="tour-date-city">Londres, Angleterre</div>
+      </div>
+      <span class="tour-status status-sold">Sold Out</span>
+      <button class="tour-ticket-btn">Billets</button>
+    </div>
+    <div class="tour-date" onclick="openTicket('Madison Square Garden', 'New York, USA', 'SOLD OUT')">
+      <div class="tour-date-date">22 FÉV</div>
+      <div class="tour-date-info">
+        <div class="tour-date-venue">Madison Square Garden</div>
+        <div class="tour-date-city">New York, USA</div>
+      </div>
+      <span class="tour-status status-sold">Sold Out</span>
+      <button class="tour-ticket-btn">Billets</button>
+    </div>
+    <div class="tour-date" onclick="openTicket('Sydney Opera House', 'Sydney, Australie', 'SOLD OUT')">
+      <div class="tour-date-date">08 MAR</div>
+      <div class="tour-date-info">
+        <div class="tour-date-venue">Sydney Opera House</div>
+        <div class="tour-date-city">Sydney, Australie</div>
+      </div>
+      <span class="tour-status status-sold">Sold Out</span>
+      <button class="tour-ticket-btn">Billets</button>
+    </div>
+    <div class="tour-date" onclick="openTicket('Budokan', 'Tokyo, Japon', 'SOLD OUT')">
+      <div class="tour-date-date">19 AVR</div>
+      <div class="tour-date-info">
+        <div class="tour-date-venue">Nippon Budokan</div>
+        <div class="tour-date-city">Tokyo, Japon</div>
+      </div>
+      <span class="tour-status status-sold">Sold Out</span>
+      <button class="tour-ticket-btn">Billets</button>
+    </div>
+    <div class="tour-date" onclick="openTicket('L\'Olympia', 'Paris, France', 'SOLD OUT')">
+      <div class="tour-date-date">03 MAI</div>
+      <div class="tour-date-info">
+        <div class="tour-date-venue">L'Olympia</div>
+        <div class="tour-date-city">Paris, France</div>
+      </div>
+      <span class="tour-status status-sold">Sold Out</span>
+      <button class="tour-ticket-btn">Billets</button>
+    </div>
+    <div class="tour-date" onclick="openTicket('Coachella Valley Music Festival', 'Indio, California', 'SOLD OUT')">
+      <div class="tour-date-date">12 JUI</div>
+      <div class="tour-date-info">
+        <div class="tour-date-venue">Coachella Valley Festival</div>
+        <div class="tour-date-city">Indio, California</div>
+      </div>
+      <span class="tour-status status-sold">Sold Out</span>
+      <button class="tour-ticket-btn">Billets</button>
+    </div>
+  </div>
+
+  <!-- LA DATE SPÉCIALE -->
+  <div class="tour-highlight">
+    <div class="tour-highlight-icon">★</div>
+    <div class="tour-highlight-text">
+      <span class="live-dot"></span><strong>29 AVRIL 2026 — 20H · Date exclusive</strong><br>
+      Salon de Baptiste · Quelques places restantes<br>
+      <span style="font-size:10px; color: var(--gray);">Parking limité. Voisins pas encore prévenus.</span>
+    </div>
+  </div>
+
+  <!-- COUNTDOWN -->
+  <div class="countdown-block">
+    <div class="countdown-label">Prochain concert — 29 avril 2026 à 20h</div>
+    <div class="countdown-units">
+      <div class="countdown-unit">
+        <span class="countdown-val" id="cd-days">--</span>
+        <div class="countdown-unit-label">Jours</div>
+      </div>
+      <div class="countdown-sep">:</div>
+      <div class="countdown-unit">
+        <span class="countdown-val" id="cd-hours">--</span>
+        <div class="countdown-unit-label">Heures</div>
+      </div>
+      <div class="countdown-sep">:</div>
+      <div class="countdown-unit">
+        <span class="countdown-val" id="cd-mins">--</span>
+        <div class="countdown-unit-label">Minutes</div>
+      </div>
+      <div class="countdown-sep">:</div>
+      <div class="countdown-unit">
+        <span class="countdown-val" id="cd-secs">--</span>
+        <div class="countdown-unit-label">Secondes</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SETLIST -->
+<section id="setlist">
+  <div class="section-header">
+    <div class="section-num">02</div>
+    <div class="section-title">Set<span>list</span></div>
+  </div>
+
+  <div id="setlist-tracks">
+    <div class="setlist-track">
+      <div class="track-num">01</div>
+      <div class="track-bar"><div class="track-bar-fill" style="height:90%"></div></div>
+      <div class="track-info">
+        <div class="track-name">Intro Épique (Impro)</div>
+        <div class="track-desc">Solo de caisse claire · Réveil des voisins</div>
+      </div>
+      <div class="track-duration">7:34</div>
+    </div>
+    <div class="setlist-track">
+      <div class="track-num">02</div>
+      <div class="track-bar"><div class="track-bar-fill" style="height:75%"></div></div>
+      <div class="track-info">
+        <div class="track-name">Mario Kart Anthem Vol. 3</div>
+        <div class="track-desc">Rock · Intensité maximale</div>
+      </div>
+      <div class="track-duration">4:12</div>
+    </div>
+    <div class="setlist-track">
+      <div class="track-num">03</div>
+      <div class="track-bar"><div class="track-bar-fill" style="height:60%"></div></div>
+      <div class="track-info">
+        <div class="track-name">Drum Gunner Cover</div>
+        <div class="track-desc">À jamais les deuxième</div>
+      </div>
+      <div class="track-duration">70:70</div>
+    </div>
+    <div class="setlist-track">
+      <div class="track-num">04</div>
+      <div class="track-bar"><div class="track-bar-fill" style="height:85%"></div></div>
+      <div class="track-info">
+        <div class="track-name">Tie Break Session</div>
+        <div class="track-desc">Impro · Avantage Baptteur</div>
+      </div>
+      <div class="track-duration">12:03</div>
+    </div>
+    <div class="setlist-track">
+      <div class="track-num">05</div>
+      <div class="track-bar"><div class="track-bar-fill" style="height:70%"></div></div>
+      <div class="track-info">
+        <div class="track-name">El Rey Musico</div>
+        <div class="track-desc">Salsa · Accessoire Moustache</div>
+      </div>
+      <div class="track-duration">5:55</div>
+    </div>
+    <div class="setlist-track">
+      <div class="track-num">06</div>
+      <div class="track-bar"><div class="track-bar-fill" style="height:50%"></div></div>
+      <div class="track-info">
+        <div class="track-name">Bis (Si Applaudissements)</div>
+        <div class="track-desc">Conditionnel · Non garanti</div>
+      </div>
+      <div class="track-duration">?:??</div>
+    </div>
+  </div>
+</section>
+
+<!-- PRESSE -->
+<section>
+  <div class="section-header">
+    <div class="section-num">03</div>
+    <div class="section-title">La <span>Presse</span></div>
+  </div>
+
+  <div class="press-grid">
+    <div class="press-quote">
+      <div class="press-stars">★★★★★</div>
+      <div class="press-text">"Baptteur a changé ma façon d'entendre la batterie. Et mes fenêtres."</div>
+      <div class="press-source">— Le Monde, supplément culture</div>
+    </div>
+    <div class="press-quote">
+      <div class="press-stars">★★★★★</div>
+      <div class="press-text">"Cinq étoiles. Je ne sais pas pourquoi, mais cinq étoiles."</div>
+      <div class="press-source">— NME, édition britannique</div>
+    </div>
+    <div class="press-quote">
+      <div class="press-stars">★★★★☆</div>
+      <div class="press-text">"Nous lui aurions donné cinq étoiles mais il a réveillé notre journaliste à 3h du matin."</div>
+      <div class="press-source">— Rolling Stone France</div>
+    </div>
+    <div class="press-quote">
+      <div class="press-stars">★★★★★</div>
+      <div class="press-text">"Sincèrement impressionné. Mon fils aussi joue de la batterie maintenant. Je suis partagé."</div>
+      <div class="press-source">— Un voisin, témoignage spontané</div>
+    </div>
+  </div>
+</section>
+
+<!-- MERCH -->
+<section id="merch">
+  <div class="section-header">
+    <div class="section-num">04</div>
+    <div class="section-title">Merch <span>Officiel</span></div>
+  </div>
+
+  <div class="merch-grid">
+    <div class="merch-item" onclick="alert('Désolé, sold out. Comme tout le reste.')">
+      <div class="merch-sold-out">Sold Out</div>
+      <span class="merch-icon">🥁</span>
+      <div class="merch-name">Drum Kit "Baptteur Pro"</div>
+      <div class="merch-price">€35</div>
+      <div class="merch-note">Réplique exacte du kit du Salon · Légèrement abîmé</div>
+    </div>
+    <div class="merch-item" onclick="alert('Désolé, sold out. Comme tout le reste.')">
+      <div class="merch-sold-out">Sold Out</div>
+      <span class="merch-icon">🥢</span>
+      <div class="merch-name">Baguette Dédicacée</div>
+      <div class="merch-price">€89</div>
+      <div class="merch-note">Légèrement utilisée · Signature authentique</div>
+    </div>
+    <div class="merch-item" onclick="alert('En stock ! Contactez le salon.')">
+      <span class="merch-icon">👨</span>
+      <div class="merch-name">Kit Mullet — Moustache</div>
+      <div class="merch-price">€28</div>
+      <div class="merch-note">Le fan kit pour être un vrai fan de Baptteur · En stock (1 restant)</div>
+    </div>
+    <div class="merch-item" onclick="alert('Bientôt disponible. Probablement.')">
+      <span class="merch-icon">📀</span>
+      <div class="merch-name">Vinyle "Best Of Baptteur — BoB"</div>
+      <div class="merch-price">€45</div>
+      <div class="merch-note">Pressage limité · Enregistrement TikTok</div>
+    </div>
+  </div>
+</section>
+
+<!-- FAN SUPPORT -->
+<section id="support">
+  <div class="section-header">
+    <div class="section-num">05</div>
+    <div class="section-title">Fan <span>Support</span></div>
+  </div>
+
+  <div class="support-meter-wrap">
+    <div class="support-meter-label">
+      <span>Énergie collective des fans</span>
+      <span id="support-pct">67%</span>
+    </div>
+    <div class="support-meter-bar">
+      <div class="support-meter-fill" id="support-bar" style="width:67%"></div>
+    </div>
+    <div style="font-size:10px; color:var(--gray); margin-top:8px; letter-spacing:0.05em;">
+      <span id="click-counter">0</span> soutiens envoyés ce soir
+    </div>
+  </div>
+
+  <div class="support-btns">
+    <button class="support-btn" onclick="supportAction('🥁', 7, 'Les baguettes vibrent !')">
+      <span class="btn-icon">🥁</span>Baguette virtuelle
+    </button>
+    <button class="support-btn" onclick="supportAction('🔥', 5, 'Le salon est en feu !')">
+      <span class="btn-icon">🔥</span>En feu ce soir
+    </button>
+    <button class="support-btn" onclick="supportAction('👑', 9, 'Couronne posée. Méritée.')">
+      <span class="btn-icon">👑</span>Légende absolue
+    </button>
+    <button class="support-btn" onclick="supportAction('🏟️', 6, 'Wembley le réclame !')">
+      <span class="btn-icon">🏟️</span>Digne de Wembley
+    </button>
+  </div>
+  <div class="support-feedback" id="support-msg"></div>
+</section>
+
+<!-- BOOKING / DEMANDE EXCLUSIVE -->
+<section id="booking">
+  <div class="section-header">
+    <div class="section-num">06</div>
+    <div class="section-title">Booking <span>Exclusif</span></div>
+  </div>
+
+  <div class="form-group">
+    <label class="form-label">Votre nom / organisation</label>
+    <input class="form-input" id="booking-nom" type="text" placeholder="ex : Glastonbury Festival, mon anniversaire...">
+  </div>
+  <div class="form-group">
+    <label class="form-label">Type de prestation</label>
+    <select class="form-input" id="booking-type">
+      <option value="">Sélectionner</option>
+      <option>Concert solo (2–3h, prévoir bouchons d'oreilles)</option>
+      <option>Set exclusif (durée négociable)</option>
+      <option>Dédicace personnalisée (baguette ou vidéo)</option>
+      <option>Cours de batterie (niveau débutant uniquement)</option>
+      <option>Fond sonore mariage / anniversaire</option>
+      <option>Autre (décrire ci-dessous)</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label class="form-label">Message au manager de Baptteur</label>
+    <textarea class="form-input" id="booking-message" rows="4" placeholder="Décrivez votre vision. Baptteur lira ce message entre deux sessions d'entraînement."></textarea>
+  </div>
+  <button class="btn-primary" style="width:100%" onclick="submitForm()">Envoyer la demande →</button>
+
+  <p class="form-disclaimer">
+    Délai de réponse habituel : entre 48h et jamais, selon les performances d'Arsenal et l'humeur des baguettes. 
+    En soumettant ce formulaire, vous reconnaissez que Baptteur est <a href="#">objectivement le meilleur batteur du monde</a>, 
+    probablement.
+  </p>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">BAPT<span>TEUR</span></div>
+  <div class="footer-tagline">"Le meilleur batteur du monde. Probablement." — Baptteur, sur lui-même.</div>
+  <div class="footer-links">
+    <a href="https://www.tiktok.com/@baptteur" target="_blank" rel="noopener">TikTok</a>
+    <a href="https://www.instagram.com/baptteur" target="_blank" rel="noopener">Instagram</a>
+    <a href="#booking">Booking</a>
+    <a href="#merch">Merch</a>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-arsenal"></span>Also a Gunner. COYG.<br>
+    © 2026 Baptteur World Tour. Tous droits réservés. Même ceux qu'on a inventés.<br>
+    Fan page officielle — faite avec amour.
+  </div>
+</footer>
+
+<!-- MODAL SOUTIEN 100% -->
+<div class="modal-overlay" id="modal-soutien" onclick="closeSoutienModal(event)">
+  <div class="modal">
+    <button class="modal-close" onclick="closeSoutienModal(null, true)">✕</button>
+    <div style="font-size:10px; letter-spacing:0.15em; color:var(--red); text-transform:uppercase; margin-bottom:8px;">🔥 Énergie maximale atteinte !</div>
+    <div class="modal-title" style="font-size:22px; margin-bottom:6px;">Envoie ton soutien à Baptteur</div>
+    <div class="modal-venue" style="margin-bottom:24px;">Il mérite de le savoir. Maintenant.</div>
+
+    <div class="form-group">
+      <label class="form-label">Ton prénom</label>
+      <input class="form-input" id="soutien-prenom" type="text" placeholder="ex : Kevin, Stéphanie, Le voisin...">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Ton message <span id="char-count" style="color:var(--gray)">(200 max)</span></label>
+      <textarea class="form-input" id="soutien-message" rows="4"
+        maxlength="200"
+        placeholder="Dis-lui ce que tu penses vraiment. Il le lira entre deux sessions."
+        oninput="updateCharCount()"></textarea>
+    </div>
+
+    <button class="btn-primary" style="width:100%; margin-bottom:10px" onclick="envoyerSoutien()">
+      Envoyer mon soutien →
+    </button>
+    <button class="btn-outline" style="width:100%" onclick="closeSoutienModal(null, true)">
+      Pas maintenant
+    </button>
+    <div id="soutien-error" style="font-size:11px; color:var(--red); margin-top:10px; min-height:16px; text-align:center;"></div>
+  </div>
+</div>
+
+<!-- TICKET MODAL -->
+<div class="modal-overlay" id="modal" onclick="closeModal(event)">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal(null, true)">✕</button>
+    <div style="font-size:10px; letter-spacing:0.15em; color:var(--red); text-transform:uppercase; margin-bottom:8px;">Billetterie officielle</div>
+    <div class="modal-title" id="modal-venue">Wembley Stadium</div>
+    <div class="modal-venue" id="modal-city">Londres, Angleterre</div>
+    <div class="ticket-price">€0</div>
+    <div class="ticket-note" id="modal-note">Ce concert est sold out depuis 3 secondes après l'ouverture de la billetterie.</div>
+    <button class="btn-primary" style="width:100%; margin-bottom:10px" onclick="closeModal(null,true)">
+      Liste d'attente (inutile)
+    </button>
+    <button class="btn-outline" style="width:100%" onclick="closeModal(null,true)">
+      Retour aux dates
+    </button>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════
+// COUNTDOWN CONFIG — modifie uniquement cette ligne
+const COUNTDOWN_TARGET = '2026-04-29T20:00:00'; // Format: AAAA-MM-JJTHH:MM:SS
+// ═══════════════════════════════════════════════
+(function() {
+  const target = new Date(COUNTDOWN_TARGET);
+  function update() {
+    const diff = target - new Date();
+    if (diff <= 0) {
+      ['cd-days','cd-hours','cd-mins','cd-secs'].forEach(id => document.getElementById(id).textContent = '00');
+      return;
+    }
+    const d = Math.floor(diff / 86400000);
+    const h = Math.floor((diff % 86400000) / 3600000);
+    const m = Math.floor((diff % 3600000) / 60000);
+    const s = Math.floor((diff % 60000) / 1000);
+    document.getElementById('cd-days').textContent = String(d).padStart(2,'0');
+    document.getElementById('cd-hours').textContent = String(h).padStart(2,'0');
+    document.getElementById('cd-mins').textContent = String(m).padStart(2,'0');
+    document.getElementById('cd-secs').textContent = String(s).padStart(2,'0');
+  }
+  update();
+  setInterval(update, 1000);
+})();
+
+// ═══════════════════════════════════════════════
+// SUPPORT METER — Config
+const SUPPORT_MAIL = 'contact@baptteur.fr'; // ← Adresse mail de Baptiste
+// ═══════════════════════════════════════════════
+let supportPct = 67;
+let clickCount = 0;
+let soutienModalOpened = false;
+
+const msgs = [
+  "Le salon tremble !",
+  "Baptteur sent l'amour !",
+  "Wembley est jaloux.",
+  "Les voisins vont être prévenus.",
+  "Baguettes en feu !",
+  "Arsenal envoie ses salutations.",
+  "Record battu. Comme toujours.",
+  "El Rey Musico approuve !",
+];
+
+function supportAction(icon, val, msg) {
+  clickCount++;
+  document.getElementById('click-counter').textContent = clickCount;
+
+  const newPct = Math.min(100, supportPct + val);
+  supportPct = newPct;
+  document.getElementById('support-bar').style.width = supportPct + '%';
+  document.getElementById('support-pct').textContent = supportPct + '%';
+
+  const el = document.getElementById('support-msg');
+  el.textContent = msg || msgs[Math.floor(Math.random() * msgs.length)];
+  setTimeout(() => { el.textContent = ''; }, 2000);
+
+  // À 100% : ouvrir modal soutien (une seule fois par cycle)
+  if (supportPct >= 100 && !soutienModalOpened) {
+    soutienModalOpened = true;
+    setTimeout(() => {
+      document.getElementById('modal-soutien').classList.add('open');
+    }, 400);
+  }
+}
+
+function updateCharCount() {
+  const msg = document.getElementById('soutien-message').value;
+  const remaining = 200 - msg.length;
+  document.getElementById('char-count').textContent = '(' + remaining + ' restants)';
+  document.getElementById('char-count').style.color = remaining < 20 ? 'var(--red)' : 'var(--gray)';
+}
+
+function envoyerSoutien() {
+  const prenom = document.getElementById('soutien-prenom').value.trim();
+  const message = document.getElementById('soutien-message').value.trim();
+  const errEl = document.getElementById('soutien-error');
+
+  if (!prenom) { errEl.textContent = 'Ton prénom, s\'il te plaît.'; return; }
+  if (!message) { errEl.textContent = 'Un message, même court !'; return; }
+  errEl.textContent = '';
+
+  const subject = encodeURIComponent('💥 Soutien de ' + prenom + ' — Baptteur Fan Page');
+  const body = encodeURIComponent(
+    'Prénom : ' + prenom + '\n\n' +
+    'Message :\n' + message + '\n\n' +
+    '---\nEnvoyé depuis la fan page officielle non-officielle de Baptteur.\n' +
+    'Compteur de soutiens ce soir : ' + clickCount
+  );
+
+  window.location.href = 'mailto:' + SUPPORT_MAIL + '?subject=' + subject + '&body=' + body;
+
+  // Reset après envoi
+  setTimeout(() => {
+    closeSoutienModal(null, true);
+    supportPct = 27;
+    document.getElementById('support-bar').style.width = '27%';
+    document.getElementById('support-pct').textContent = '27%';
+    soutienModalOpened = false;
+    const el = document.getElementById('support-msg');
+    el.textContent = '✉️ Message envoyé. Baptteur est touché.';
+    setTimeout(() => { el.textContent = ''; }, 3000);
+  }, 800);
+}
+
+function closeSoutienModal(e, force) {
+  if (force || (e && e.target === document.getElementById('modal-soutien'))) {
+    document.getElementById('modal-soutien').classList.remove('open');
+    // Reset même si annulé, pour permettre un nouveau cycle
+    if (supportPct >= 100) {
+      supportPct = 27;
+      document.getElementById('support-bar').style.width = '27%';
+      document.getElementById('support-pct').textContent = '27%';
+      soutienModalOpened = false;
+    }
+  }
+}
+
+// TICKET MODAL
+const soldNotes = [
+  "Ce concert est sold out depuis 3 secondes après l'ouverture de la billetterie.",
+  "Sold out en 0,3 secondes. Un record mondial.",
+  "Toutes les places ont été achetées par des fans qui pleuraient.",
+  "Sold out avant même l'annonce officielle. Mystère absolu.",
+];
+function openTicket(venue, city, status) {
+  document.getElementById('modal-venue').textContent = venue;
+  document.getElementById('modal-city').textContent = city;
+  document.getElementById('modal-note').textContent = soldNotes[Math.floor(Math.random() * soldNotes.length)];
+  document.getElementById('modal').classList.add('open');
+}
+function closeModal(e, force) {
+  if (force || (e && e.target === document.getElementById('modal'))) {
+    document.getElementById('modal').classList.remove('open');
+  }
+}
+
+// BOOKING FORM — mailto
+function submitForm() {
+  const nom = document.getElementById('booking-nom').value.trim();
+  const type = document.getElementById('booking-type').value;
+  const message = document.getElementById('booking-message').value.trim();
+
+  if (!nom) { alert('Merci d\'indiquer votre nom ou organisation.'); return; }
+
+  const subject = encodeURIComponent('🥁 Demande de booking — ' + (nom || 'Anonyme'));
+  const body = encodeURIComponent(
+    'Nom / Organisation : ' + (nom || 'Non renseigné') + '\n' +
+    'Type de prestation : ' + (type || 'Non sélectionné') + '\n\n' +
+    'Message :\n' + (message || 'Aucun message.') + '\n\n' +
+    '---\nEnvoyé depuis baptteur.fr'
+  );
+  window.location.href = 'mailto:contact@baptteur.fr?subject=' + subject + '&body=' + body;
+}
+
+// TICKER duplication pour loop sans blanc
+(function() {
+  const inner = document.querySelector('.ticker-inner');
+  inner.innerHTML = inner.innerHTML + inner.innerHTML;
+})();
+</script>
+
+</body>
+</html>
